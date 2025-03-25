@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>React JSX 예제</title>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+
+    <!-- Babel (JSX 변환용) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- JSX가 들어간 스크립트는 반드시 type="text/babel" -->
+    <script type="text/babel">
+        function Btn({ text, changeValue }) {
+            console.log(text, "was Rendered")
+            return <button
+                onClick={changeValue}
+                style={{
+                    backgroundColor: "tomato",
+                    color: "white",
+                    padding: "10px 20px",
+                    border: 0,
+                    borderRadius: 10,
+                }}>{text}</button>;
+        };
+
+        const MemorizedBtn = React.memo(Btn)
+
+        function App() {
+            const [value, setValue] = React.useState("Save Changes");
+            const changeValue = () => setValue("Revert Changes");
+            return (
+                <div>
+                    <MemorizedBtn text={value} changeValue={changeValue} />
+                    <MemorizedBtn text="Continue" />
+                </div>
+            )
+        }
+
+
+
+
+        const root = document.getElementById("root");
+        ReactDOM.render(<App />, root);
+    </script>
+</body>
+
+</html>

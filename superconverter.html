@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>React JSX 예제</title>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+
+    <!-- Babel (JSX 변환용) -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- JSX가 들어간 스크립트는 반드시 type="text/babel" -->
+    <script type="text/babel">
+
+        function MinutesToHours() {
+            const [amount, setAmount] = React.useState("");
+            const [inverted, setInverted] = React.useState("");
+            const onChange = (e) => {
+                setAmount(e.target.value);
+            };
+
+            const reset = () => setAmount("");
+            const onInvert = () => {
+                reset();
+                setInverted((current) => !current);
+            };
+            return (
+                <div>
+                    <div>
+                        <h2>Time Converter</h2>
+                        <label htmlFor="minutes">Minutes</label>
+                        <input
+                            type="number"
+                            value={inverted ? (amount * 60).toFixed(0) : amount}
+                            id='minutes'
+                            placeholder="Minutes"
+                            onChange={onChange}
+                            disabled={inverted}
+
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="hours">Hours</label>
+                        <input
+                            type="number"
+                            value={inverted ? amount : (amount / 60).toFixed(2)} //toFixed(자릿수) 소수점 몇번째자리까지 나온다는 뜻
+                            id='hours'
+                            placeholder="Hours"
+                            onChange={onChange}
+                            disabled={!inverted}
+                        />
+                    </div>
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={onInvert}>
+                        {inverted ? "Turn back" : "Invert"}
+                    </button>
+                </div>
+
+
+            );
+        };
+        function KmToMiles() {
+            const [amount, setAmount] = React.useState("");
+            const [inverted, setInverted] = React.useState("");
+            const onChange = (e) => {
+                setAmount(e.target.value);
+            };
+            const reset = () => setAmount("");
+            const onInvert = () => {
+                reset();
+                setInverted((current) => !current);
+            };
+            return (
+                <div>
+                    <div>
+                        <h2>Distance Converter</h2>
+                        <label htmlFor="km">Km</label>
+                        <input
+                            type="number"
+                            value={inverted ? (amount / 0.621371).toFixed(2) : amount}
+                            id='km'
+                            placeholder="Km"
+                            onChange={onChange}
+                            disabled={inverted}
+
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="miles">Miles</label>
+                        <input
+                            type="number"
+                            value={inverted ? amount : (amount * 0.621371).toFixed(2)} //toFixed(자릿수) 소수점 몇번째자리까지 나온다는 뜻
+                            id='miles'
+                            placeholder="Miles"
+                            onChange={onChange}
+                            disabled={!inverted}
+                        />
+                    </div>
+                    <button onClick={reset}>Reset</button>
+                    <button onClick={onInvert}>
+                        {inverted ? "Turn back" : "Invert"}
+                    </button>
+
+                </div>
+            );
+
+
+        };
+        function App() {
+            const [index, setIndex] = React.useState("xx")
+            const onSelect = (e) => {
+                setIndex(e.target.value);
+            };
+            return (
+                <div>
+                    <h1>Super Converter</h1>
+                    <select value={index} onChange={onSelect}>
+                        <option value="xx">----Select Units----</option>
+                        <option value="0">Minutes and Hours</option>
+                        <option value="1">Km and Miles</option>
+                    </select>
+                    <hr />
+                    {index === "0" ? <MinutesToHours /> : null}
+                    {index === "1" ? <KmToMiles /> : null}
+                </div>
+
+            );
+        };
+
+
+
+
+        const root = document.getElementById("root");
+        ReactDOM.render(<App />, root);
+    </script>
+</body>
+
+</html>

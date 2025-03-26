@@ -7,14 +7,14 @@ import {
 } from "react-router-dom";
 
 function App() {
-  console.log("App rendered");
+  console.log(process.env.PUBLIC_URL);
+
 
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Routes>
-        <Route path="/abot-us" element={<h1>Hello?</h1>} />
-        <Route path="/movie/:id" element={<Detail />} />
         <Route path="/" element={<Home />} />
+        <Route path="/movie/:id" element={<Detail />} />
       </Routes>
     </Router>
   );

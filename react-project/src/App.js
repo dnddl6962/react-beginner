@@ -1,28 +1,22 @@
-import Button from "./Button";
-import styles from "./App.module.css";
-import { useState, useEffect } from "react";
-
+import Home from "./routes/Home";
+import Detail from "./routes/Detail";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const [coins, setCoins] = useState([]);
-  useEffect(() => {
-    fetch("https://api.coinpaprika.com/v1/tickers")
-      .then((response) => response.json())
-      .then((json) => {
-        setCoins(json);
-        setLoading(false);
-      });
-  }, []);
-  console.log(coins)
-  return (
-    <div>
-      <h1>The Coins! ({coins.length})</h1>
-      {loading ? (<strong>Loading</strong>) : (<select>
-        {coins.map((coin) => <option>name : {coin.name}({coin.symbol}) price : ${coin.quotes.USD.price.toFixed(5)}</option>)}
-      </select>)}
+  console.log("App rendered");
 
-    </div>
+  return (
+    <Router>
+      <Routes>
+        <Route path="/abot-us" element={<h1>Hello?</h1>} />
+        <Route path="/movie/:id" element={<Detail />} />
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Router>
   );
 }
 
